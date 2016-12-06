@@ -3,7 +3,7 @@ import csv
 from time import sleep
 
 def set_standings():
-    with open("lottery_teams.csv", 'rU') as f:
+    with open("lottery_teams_2016.csv", 'rU') as f:
         standings = {}
         reader = csv.reader(f, delimiter=',')
         for row in reader:
