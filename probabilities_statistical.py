@@ -5,7 +5,7 @@ from argparse import ArgumentParser
 from itertools import permutations
 
 def set_standings():
-    with open("lotter_standings_2016.csv", 'rU') as f:
+    with open("lottery_standings_2016.csv", 'rU') as f:
         standings = {}
         reader = csv.reader(f, delimiter=',')
         for row in reader:
