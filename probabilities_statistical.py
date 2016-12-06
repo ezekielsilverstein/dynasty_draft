@@ -4,8 +4,8 @@ import csv
 from argparse import ArgumentParser
 from itertools import permutations
 
-def set_standings():
-    with open("lottery_standings_2016.csv", 'rU') as f:
+def set_standings(fname):
+    with open(fname, 'rU') as f:
         standings = {}
         reader = csv.reader(f, delimiter=',')
         for row in reader:
@@ -72,9 +72,9 @@ def printout(prob_dict, cum_prob_dict):
         print ("")
     return None
 
-def main():
+def main(fname):
     global standings
-    standings = set_standings()
+    standings = set_standings(fname)
     global counts
     counts = set_ball_count_dict()
     prob_dict = create_prob_dict()
@@ -83,5 +83,9 @@ def main():
     return None
 
 if __name__ == "__main__":
-    main()
+    parser = ArgumentParser()
+    parser.add_argument('-f', '--filename', default="lottery_standings_2016.csv",
+    type=str, help='Name of file containing lottery standings')
+    args = parser.parse_args()
 
+    main(args.filename)
