@@ -1,9 +1,10 @@
 import random
 import csv
 from time import sleep
+from argparse import ArgumentParser
 
-def set_standings():
-    with open("lottery_standings_2016.csv", 'rU') as f:
+def set_standings(fname):
+    with open(fname, 'rU') as f:
         standings = {}
         reader = csv.reader(f, delimiter=',')
         for row in reader:
@@ -42,9 +43,9 @@ def printout(draft_order):
         sleep(2)
     return None
 
-def main():
+def main(fname):
     global standings
-    standings = set_standings()
+    standings = set_standings(fname)
     global counts
     counts = set_ball_count_dict()
     global balls
@@ -53,4 +54,9 @@ def main():
     printout(draft_order)
     
 if __name__ == '__main__':
-    main()
+    parser = ArgumentParser()
+    parser.add_argument('-f', '--filename', default="lottery_standings_2016.csv",
+    type=str, help='Name of file containing lottery standings')
+    args = parser.parse_args()
+
+    main(args.filename)
