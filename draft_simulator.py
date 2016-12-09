@@ -4,10 +4,10 @@ from time import sleep
 from argparse import ArgumentParser
 
 def set_standings(fname):
-	"""
-	Import a textfile containing the standings of teams 
-	to be entered into the lottery
-	"""
+    """
+    Import a textfile containing the standings of teams 
+    to be entered into the lottery
+    """
     with open(fname, 'rU') as f:
         standings = {}
         reader = csv.reader(f, delimiter=',')
@@ -18,24 +18,24 @@ def set_standings(fname):
     return standings
 
 def set_ball_count_dict():
-	"""
-	Create a dictionary:
+    """
+    Create a dictionary:
 
-	keys: team names
-	values: number of ping-pong balls
-	"""
+    keys: team names
+    values: number of ping-pong balls
+    """
     counts = {}
     for t in sorted(standings.keys()):
         counts[standings[t]] = t - 6
     return counts
 
 def create_balls():
-	"""
-	Create a list of ping-pong balls.
-	Each ball is labelled by a team name.
-	The number of balls for each team is set
-	by set_ball_count_dict()
-	"""
+    """
+    Create a list of ping-pong balls.
+    Each ball is labelled by a team name.
+    The number of balls for each team is set
+    by set_ball_count_dict()
+    """
     balls = []
     for k,v in counts.iteritems():
         for i in range(v):
@@ -43,12 +43,12 @@ def create_balls():
     return balls
 
 def selection():
-	"""
-	Select ping-pong balls and create a draft order
+    """
+    Select ping-pong balls and create a draft order
 
-	Continue selecting teams which have not been chosen yet.
-	Result is a dictionary with the pick number and the team
-	"""
+    Continue selecting teams which have not been chosen yet.
+    Result is a dictionary with the pick number and the team
+    """
     order = {}
     while len(order) < 6:
         pick = random.choice(balls)
@@ -57,9 +57,9 @@ def selection():
     return order
 
 def printout(draft_order):
-	"""
-	Printout to create suspension :)
-	"""
+    """
+    Printout to create suspension :)
+    """
     for k in reversed(draft_order.keys()):
         print "With Pick Number {}:".format(k)
         sleep(2)
@@ -69,9 +69,9 @@ def printout(draft_order):
     return None
 
 def main(fname):
-	"""
-	Craft the total function
-	"""
+    """
+    Craft the total function
+    """
     global standings
     standings = set_standings(fname)
     global counts
