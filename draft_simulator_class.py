@@ -10,9 +10,9 @@ class Simulator:
     """
     def __init__(self, filename):
         self.filename = filename
+        self.standings = self.read_in_standings()
 
     def perform_lottery(self):
-        self.standings = self.read_in_standings()
         self.counts = self.set_ball_count()
         self.ppballs = self.create_balls()
         self.order = self.selection()
