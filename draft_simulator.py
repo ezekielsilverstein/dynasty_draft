@@ -47,7 +47,7 @@ class Simulator:
         """
         Create a list of ping-pong balls.
         Each ball is labelled by a team name.
-        The nubmer of balls for each team is set
+        The number of balls for each team is set
         by the ball count dict
         :return: list of ping-pong balls
         """
@@ -62,7 +62,7 @@ class Simulator:
         Select ping-pong balls and create a draft order
 
         Continue selecting teams which have not been chosen yet
-        Result is adictionary with the pick number and the team
+        Result is a dictionary with the pick number and the team
         :return: Lottery order dict
         """
         order = {}
@@ -168,7 +168,6 @@ class Simulator:
         :param permutation: A single draft order permutation
         :return: Chance of selection
         """
-
         chance_list = []
         denominator = sum(self.counts.values())
 
@@ -179,7 +178,6 @@ class Simulator:
             denominator -= numerator
 
         chance_of_this_permutation = reduce(lambda x, y: x*y, chance_list)
-
         return chance_of_this_permutation
 
     def print_probabilities(self):
