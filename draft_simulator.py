@@ -5,6 +5,7 @@ from argparse import ArgumentParser
 import datetime
 from itertools import permutations
 
+
 class Simulator:
     """
     Draft Lottery Simulation Class
@@ -59,7 +60,7 @@ class Simulator:
     def selection(self):
         """
         Select ping-pong balls and create a draft order
-        
+
         Continue selecting teams which have not been chosen yet
         Result is adictionary with the pick number and the team
         :return: Lottery order dict
@@ -68,7 +69,7 @@ class Simulator:
         while len(order) < 6:
             pick = random.choice(self.ppballs)
             if pick not in order.values():
-                order[len(order)+1]=pick
+                order[len(order)+1] = pick
         return order
 
     def print_draft_results(self):
@@ -112,7 +113,6 @@ class Simulator:
         probabilistic_odds_dict = self._cycle_through_permutations(standings_permutations)
         return probabilistic_odds_dict
 
-
     def _calculate_cumulative_probabilities_statistical(self):
         """
         Calculate the chance that each team gets a certain pick OR BETTER
@@ -132,7 +132,6 @@ class Simulator:
                     [self.probabilistic_odds[team][i] for i in pick_dict.keys() if i <= pick]), 4)
 
         return cumulative_probabilistic_odds_dict
-
 
     def _cycle_through_permutations(self, permutations_gen):
         """
@@ -179,7 +178,7 @@ class Simulator:
             chance_list.append(chance_of_selection)
             denominator -= numerator
 
-        chance_of_this_permutation = reduce(lambda  x, y: x*y, chance_list)
+        chance_of_this_permutation = reduce(lambda x, y: x*y, chance_list)
 
         return chance_of_this_permutation
 
@@ -205,7 +204,6 @@ class Simulator:
         return None
 
 
-
 def main(fname, action):
     """
     Set the Simulator Class and perform the lottery
@@ -214,7 +212,7 @@ def main(fname, action):
     :return: completed Simulator Class 
     """
     s = Simulator(fname)
-    s.calculate_probabilistic_odds() # Calculate odds regardless
+    s.calculate_probabilistic_odds()  # Calculate odds regardless
 
     if action == 'draft':
         s.perform_lottery()
