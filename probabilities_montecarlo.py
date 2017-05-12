@@ -2,6 +2,7 @@ from draft_simulator_class import Simulator
 from argparse import ArgumentParser
 import copy
 
+
 def run_lotteries(s, simulations):
     """
     Create a dictionary to keep track of each simulation
@@ -12,13 +13,13 @@ def run_lotteries(s, simulations):
 
     # Set the empty nested dictionary
     # empty dict for each pick set to 0
-    pick_slot_dict = {i:0 for i in range(1,7)}
+    pick_slot_dict = {i: 0 for i in range(1, 7)}
     # empty nested dict for each team and pick
     # saves counts of a team getting a certain pick
-    choices_dict = {team:pick_slot_dict.copy() for team in s.standings.values()}
+    choices_dict = {team: pick_slot_dict.copy() for team in s.standings.values()}
     # empty nested dict for each team and pick
     # save counts of a team getting a certain pick OR BETTER
-    cumulative_choices_dict = {team:pick_slot_dict.copy() for team in s.standings.values()}
+    cumulative_choices_dict = {team: pick_slot_dict.copy() for team in s.standings.values()}
 
     # Run the Simulator simulations
     for i in range(simulations):
@@ -36,6 +37,7 @@ def run_lotteries(s, simulations):
                 cumulative_choices_dict[team][cum_pick] += 1
 
     return choices_dict, cumulative_choices_dict
+
 
 def get_probabilities(s, simulations):
     """
@@ -60,6 +62,7 @@ def get_probabilities(s, simulations):
     return (choices_dict, prob_dict,
             cumulative_choices_dict, cumulative_prob_dict)
 
+
 def main(fname, simulations):
     """
     
@@ -70,6 +73,7 @@ def main(fname, simulations):
     printout(prob_dict, cumulative_prob_dict)
 
     return None
+
 
 def printout(prob_dict, cum_prob_dict):
     print "Using a Probabilistic Method:\n"
@@ -82,17 +86,17 @@ def printout(prob_dict, cum_prob_dict):
         for pick in prob_dict[team].keys():
             print (
                 "{}:\t{}\t\t{}".format(pick,
-                    prob_dict[team][pick],
-                    cum_prob_dict[team][pick]))
+                                       prob_dict[team][pick],
+                                       cum_prob_dict[team][pick]))
         print ("")
     return None
 
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument('-s', '--simulations', default=100000, type=int,
-        help='Number of Monte Carlo simulations')
+                        help='Number of Monte Carlo simulations')
     parser.add_argument('-f', '--filename', default="lottery_standings_2016.csv", type=str,
-        help='Name of file containing lottery standings')
+                        help='Name of file containing lottery standings')
     args = parser.parse_args()
 
     main(args.filename, args.simulations)
