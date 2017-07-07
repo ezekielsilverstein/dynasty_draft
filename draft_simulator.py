@@ -14,11 +14,6 @@ class Simulator:
         self.filename = filename
         self.standings = self.read_in_standings()
 
-    def perform_lottery(self):
-        self.counts = self.set_ball_count()
-        self.ppballs = self.create_balls()
-        self.order = self.selection()
-
     def read_in_standings(self):
         """
         Takes a filename, parses it
@@ -32,6 +27,11 @@ class Simulator:
                 team = str(row[1])
                 standings[place] = team
         return standings
+
+    def perform_lottery(self):
+        self.counts = self.set_ball_count()
+        self.ppballs = self.create_balls()
+        self.order = self.selection()
 
     def set_ball_count(self):
         """
@@ -210,13 +210,12 @@ def main(fname, action):
     :return: completed Simulator Class 
     """
     s = Simulator(fname)
-    s.calculate_probabilistic_odds()  # Calculate odds regardless
 
     if action == 'draft':
         s.perform_lottery()
         s.print_draft_results()
     elif action == 'odds':
-        # Odds already calculated, just print them
+        s.calculate_probabilistic_odds()
         s.print_probabilities()
 
     return s
