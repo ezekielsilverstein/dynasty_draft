@@ -10,23 +10,9 @@ class Simulator:
     """
     Draft Lottery Simulation Class
     """
-    def __init__(self, filename):
-        self.filename = filename
-        self.standings = self.read_in_standings()
-
-    def read_in_standings(self):
-        """
-        Takes a filename, parses it
-        :return: standings dictionary
-        """
-        with open(self.filename, 'rU') as f:
-            standings = {}
-            reader = csv.reader(f, delimiter=',')
-            for row in reader:
-                place = int(row[0])
-                team = str(row[1])
-                standings[place] = team
-        return standings
+    def __init__(self, standings):
+        # self.filename = filename
+        self.standings = standings
 
     def perform_lottery(self):
         self.counts = self.set_ball_count()
@@ -202,14 +188,49 @@ class Simulator:
         return None
 
 
-def main(fname, action):
+def read_in_standings(filename):
+    """
+    Takes a filename, parses it
+    :return: standings dictionary
+    """
+    with open(filename, 'rU') as f:
+        standings = {}
+        reader = csv.reader(f, delimiter=',')
+        for row in reader:
+            place = int(row[0])
+            team = str(row[1])
+            standings[place] = team
+    return standings
+
+def build_standings(num_teams_lottery, num_teams_league):
+    """
+    Asks for command line entry of standings
+    """
+    standings = {}
+    place_ranks = range(num_teams_lottery+1, num_teams_league+1)
+
+    for pr in place_ranks:
+        team = raw_input("Please input team in {}th place:\n".format(pr))
+        standings[pr] = team
+
+    return standings
+
+def main(filename, nofile, action):
     """
     Set the Simulator Class and perform the lottery
     :param fname: name of the standings txtfile
     :param action: Perform the draft or calculate and print the odds
     :return: completed Simulator Class 
     """
-    s = Simulator(fname)
+
+    if nofile:
+        num_teams_league = int(raw_input("Please input number of teams in league:\n"))
+        num_teams_lottery = int(raw_input("Please input number of teams in lottery:\n"))
+        standings = build_standings(num_teams_lottery, num_teams_league)
+    else:
+        standings = read_in_standings(filename)
+
+    s = Simulator(standings)
 
     if action == 'draft':
         s.perform_lottery()
@@ -224,10 +245,14 @@ if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument('-f', '--filename', default="lottery_standings_2016.csv",
                         type=str, help='Name of file containing lottery standings')
+    parser.add_argument('--nofile', action="store_true", 
+        help='No file containing standings is available -- Manual entry of standings is required')
+    # parser.add_argument('--teams_lottery', type=int, help='Teams in lottery')
+    # parser.add_argument('--teams_total', type=int, help='Teams in league')
     parser.add_argument('-a', '--action', default='draft', choices=['draft', 'odds'],
                         type=str, help='Perform draft (default) or determine odds')
     args = parser.parse_args()
 
-    s = main(args.filename, args.action)
+    s = main(args.filename, args.nofile, args.action)
 
 
