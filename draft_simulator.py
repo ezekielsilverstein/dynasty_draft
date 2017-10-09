@@ -26,7 +26,7 @@ class Simulator:
         """
         counts = {}
         for t in sorted(self.standings.keys()):
-            counts[self.standings[t]] = t - 6
+            counts[self.standings[t]] = t - (min(self.standings.keys()) - 1)
         return counts
 
     def create_balls(self):
@@ -52,7 +52,7 @@ class Simulator:
         :return: Lottery order dict
         """
         order = {}
-        while len(order) < 6:
+        while len(order) < len(self.standings):
             pick = random.choice(self.ppballs)
             if pick not in order.values():
                 order[len(order)+1] = pick
@@ -68,10 +68,10 @@ class Simulator:
 
         for k in reversed(self.order.keys()):
             print "With Pick Number {}:".format(k)
-            sleep(1)
+            sleep(0.5)
             print self.order[k]
             print ""
-            sleep(1)
+            sleep(0.5)
         return None
 
     ###
@@ -106,7 +106,7 @@ class Simulator:
         """
 
         # Create empty nested dictionary
-        pick_slot_dict = {i: 0 for i in range(1, 7)}
+        pick_slot_dict = {i: 0 for i in range(1, 1+len(self.standings))}
         cumulative_probabilistic_odds_dict = {team: pick_slot_dict.copy() for team in self.standings.values()}
 
         # For each team
@@ -127,7 +127,7 @@ class Simulator:
         :return: A nested dictionary for each team and the chance of getting each pick
         """
 
-        pick_slot_dict = {i: 0 for i in range(1, 7)}
+        pick_slot_dict = {i: 0 for i in range(1, 1+len(self.standings))}
         choice_odds_dict = {team: pick_slot_dict.copy() for team in self.standings.values()}
 
         # For each possible permutation
@@ -207,7 +207,7 @@ def build_standings(num_teams_lottery, num_teams_league):
     Asks for command line entry of standings
     """
     standings = {}
-    place_ranks = range(num_teams_lottery+1, num_teams_league+1)
+    place_ranks = range(num_teams_league - num_teams_lottery + 1, num_teams_league + 1)
 
     for pr in place_ranks:
         team = raw_input("Please input team in {}th place:\n".format(pr))
