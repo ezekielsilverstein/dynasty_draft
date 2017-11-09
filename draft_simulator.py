@@ -4,6 +4,7 @@ from time import sleep
 from argparse import ArgumentParser
 import datetime
 from itertools import permutations
+from functools import reduce
 
 
 class Simulator:
@@ -38,7 +39,7 @@ class Simulator:
         :return: list of ping-pong balls
         """
         ppballs = []
-        for k, v in self.counts.iteritems():
+        for k, v in self.counts.items():
             for i in range(v):
                 ppballs.append(k)
         return ppballs
@@ -63,14 +64,15 @@ class Simulator:
         Printout to create suspension :)
         """
         current_year = datetime.datetime.now().year
-        print ("\nWelcome to the {} Hyuk Dynasty Rookie Draft\n"
+        print("\nWelcome to the {} Hyuk Dynasty Rookie Draft\n"
                .format(current_year))
 
-        for k in reversed(self.order.keys()):
-            print "With Pick Number {}:".format(k)
+        keys = list(self.order.keys())
+        for k in reversed(keys):
+            print("With Pick Number {}:".format(k))
             sleep(0.5)
-            print self.order[k]
-            print ""
+            print(self.order[k])
+            print("")
             sleep(0.5)
         return None
 
@@ -141,7 +143,7 @@ class Simulator:
                 choice_odds_dict[team][pick_num + 1] += chance
 
         # Round the nested dict values
-        for team, pick_dict in choice_odds_dict.iteritems():
+        for team, pick_dict in choice_odds_dict.items():
             for pick in pick_dict.keys():
                 choice_odds_dict[team][pick] = round(choice_odds_dict[team][pick], 4)
 
@@ -177,14 +179,14 @@ class Simulator:
             statement = (
                 "---{}--- ({}th place) has these probabilities:".format(team, place)
             )
-            print statement
-            print "Pick\tThis pick\tThis pick or better"
+            print(statement)
+            print("Pick\tThis pick\tThis pick or better")
             for pick in sorted(self.probabilistic_odds[team].keys()):
-                print (
+                print(
                     "{}:\t{}\t\t{}".format(pick,
                                            self.probabilistic_odds[team][pick],
                                            self.cumulative_probabilistic_odds[team][pick]))
-                print ("")
+                print("")
         return None
 
 
@@ -210,7 +212,7 @@ def build_standings(num_teams_lottery, num_teams_league):
     place_ranks = range(num_teams_league - num_teams_lottery + 1, num_teams_league + 1)
 
     for pr in place_ranks:
-        team = raw_input("Please input team in {}th place:\n".format(pr))
+        team = input("Please input team in {}th place:\n".format(pr))
         standings[pr] = team
 
     return standings
@@ -224,8 +226,8 @@ def main(filename, nofile, action):
     """
 
     if nofile:
-        num_teams_league = int(raw_input("Please input number of teams in league:\n"))
-        num_teams_lottery = int(raw_input("Please input number of teams in lottery:\n"))
+        num_teams_league = int(input("Please input number of teams in league:\n"))
+        num_teams_lottery = int(input("Please input number of teams in lottery:\n"))
         standings = build_standings(num_teams_lottery, num_teams_league)
     else:
         standings = read_in_standings(filename)
