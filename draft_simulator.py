@@ -64,8 +64,7 @@ class Simulator:
         Printout to create suspension :)
         """
         current_year = datetime.datetime.now().year
-        print("\nWelcome to the {} Hyuk Dynasty Rookie Draft\n"
-               .format(current_year))
+        print("\nWelcome to the {} Dynasty Rookie and Free Agent Draft\n".format(current_year))
 
         keys = list(self.order.keys())
         for k in reversed(keys):
@@ -195,7 +194,7 @@ def read_in_standings(filename):
     Takes a filename, parses it
     :return: standings dictionary
     """
-    with open(filename, 'rU') as f:
+    with open(filename, 'r') as f:
         standings = {}
         reader = csv.reader(f, delimiter=',')
         for row in reader:
@@ -203,6 +202,7 @@ def read_in_standings(filename):
             team = str(row[1])
             standings[place] = team
     return standings
+
 
 def build_standings(num_teams_lottery, num_teams_league):
     """
@@ -217,10 +217,12 @@ def build_standings(num_teams_lottery, num_teams_league):
 
     return standings
 
+
 def main(filename, nofile, action):
     """
     Set the Simulator Class and perform the lottery
-    :param fname: name of the standings txtfile
+    :param filename: name of the standings txtfile
+    :param nofile: if this flag, ask for standings via input
     :param action: Perform the draft or calculate and print the odds
     :return: completed Simulator Class 
     """
@@ -243,12 +245,13 @@ def main(filename, nofile, action):
 
     return s
 
+
 if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument('-f', '--filename', default="lottery_standings_2016.csv",
                         type=str, help='Name of file containing lottery standings')
-    parser.add_argument('--nofile', action="store_true", 
-        help='No file containing standings is available -- Manual entry of standings is required')
+    parser.add_argument('--nofile', action="store_true",
+                        help='No file containing standings is available -- Manual entry of standings is required')
     # parser.add_argument('--teams_lottery', type=int, help='Teams in lottery')
     # parser.add_argument('--teams_total', type=int, help='Teams in league')
     parser.add_argument('-a', '--action', default='draft', choices=['draft', 'odds'],
