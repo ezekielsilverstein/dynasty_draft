@@ -55,8 +55,9 @@ class Simulator:
         order = {}
         while len(order) < len(self.standings):
             pick = random.choice(self.ppballs)
-            if pick not in order.values():
-                order[len(order)+1] = pick
+            order[len(order) + 1] = pick
+            self.ppballs = [ball for i, ball in enumerate(self.ppballs) if ball != pick]
+
         return order
 
     def print_draft_results(self):
