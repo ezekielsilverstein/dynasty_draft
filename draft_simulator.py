@@ -256,8 +256,6 @@ if __name__ == '__main__':
                         type=str, help='Name of file containing lottery standings')
     parser.add_argument('--nofile', action="store_true",
                         help='No file containing standings is available -- Manual entry of standings is required')
-    # parser.add_argument('--teams_lottery', type=int, help='Teams in lottery')
-    # parser.add_argument('--teams_total', type=int, help='Teams in league')
     parser.add_argument('-a', '--action', default='draft', choices=['draft', 'odds'],
                         type=str, help='Perform draft (default) or determine odds')
     args = parser.parse_args()
