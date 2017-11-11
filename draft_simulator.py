@@ -15,9 +15,11 @@ class Simulator:
         # self.filename = filename
         self.standings = standings
 
-    def perform_lottery(self):
+    def set_lottery(self):
         self.counts = self.set_ball_count()
         self.ppballs = self.create_balls()
+
+    def perform_lottery(self):
         self.order = self.selection()
 
     def set_ball_count(self):
@@ -238,6 +240,7 @@ def main(filename, nofile, action):
     s = Simulator(standings)
 
     if action == 'draft':
+        s.set_lottery()
         s.perform_lottery()
         s.print_draft_results()
     elif action == 'odds':

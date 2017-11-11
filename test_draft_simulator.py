@@ -10,16 +10,23 @@ class SimulatorTest(unittest.TestCase):
         s = Simulator(standings)
         self.assertEqual(len(s.standings), 6)
 
-    def test_correct_total_number_of_ping_pong_balls(self):
+    def test_correct_total_number_of_ping_pong_balls_before_selection(self):
         standings = read_in_standings('lottery_standings_2016.csv')
         s = Simulator(standings)
-        s.perform_lottery()
+        s.set_lottery()
         self.assertEqual(len(s.ppballs), 21)
+
+    def test_correct_total_number_of_ping_pong_balls_after_selection(self):
+        standings = read_in_standings('lottery_standings_2016.csv')
+        s = Simulator(standings)
+        s.set_lottery()
+        s.perform_lottery()
+        self.assertEqual(len(s.ppballs), 0)
 
     def test_correctly_assigned_ping_pong_balls(self):
         standings = read_in_standings('lottery_standings_2016.csv')
         s = Simulator(standings)
-        s.perform_lottery()
+        s.set_lottery()
         expected_pp_balls = { v: k-6 for k,v in s.standings.items() }
         actual_pp_balls = dict(Counter(s.ppballs))
         self.assertDictEqual(actual_pp_balls, expected_pp_balls)
@@ -57,6 +64,7 @@ class SimulatorTest(unittest.TestCase):
     def test_no_dupes_in_lottery_order(self):
         standings = read_in_standings('lottery_standings_2016.csv')
         s = Simulator(standings)
+        s.set_lottery()
         s.perform_lottery()
         self.assertEqual(len(s.order.values()), len(set(s.order.values())))
 
