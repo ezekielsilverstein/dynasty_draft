@@ -237,17 +237,17 @@ def main(filename, nofile, action):
     else:
         standings = read_in_standings(filename)
 
-    s = Simulator(standings)
+    sim = Simulator(standings)
 
     if action == 'draft':
-        s.set_lottery()
-        s.perform_lottery()
-        s.print_draft_results()
+        sim.set_lottery()
+        sim.perform_lottery()
+        sim.print_draft_results()
     elif action == 'odds':
-        s.calculate_probabilistic_odds()
-        s.print_probabilities()
+        sim.calculate_probabilistic_odds()
+        sim.print_probabilities()
 
-    return s
+    return sim
 
 
 if __name__ == '__main__':
