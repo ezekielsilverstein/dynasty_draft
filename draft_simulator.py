@@ -252,7 +252,7 @@ def main(filename, nofile, action):
 
 if __name__ == '__main__':
     parser = ArgumentParser()
-    parser.add_argument('-f', '--filename', default="lottery_standings_2016.csv",
+    parser.add_argument('-f', '--filename', default="lottery_standings.csv",
                         type=str, help='Name of file containing lottery standings')
     parser.add_argument('--nofile', action="store_true",
                         help='No file containing standings is available -- Manual entry of standings is required')
