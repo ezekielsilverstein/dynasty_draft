@@ -2,6 +2,7 @@ from collections import Counter
 
 from draft_simulator import Simulator, read_in_standings
 
+
 class TestClass(object):
 
     def test_correct_number_of_teams(self):
@@ -13,7 +14,7 @@ class TestClass(object):
         standings = read_in_standings('lottery_standings.csv')
         s = Simulator(standings)
         s.set_lottery()
-        assert len(s.ppballs) == 21        # self.assertEqual(len(s.ppballs), 21)
+        assert len(s.ppballs) == 21
 
     def test_correct_total_number_of_ping_pong_balls_after_selection(self):
         standings = read_in_standings('lottery_standings.csv')
@@ -26,7 +27,7 @@ class TestClass(object):
         standings = read_in_standings('lottery_standings.csv')
         s = Simulator(standings)
         s.set_lottery()
-        expected_pp_balls = { v: k-6 for k,v in s.standings.items() }
+        expected_pp_balls = {v: k-6 for k, v in s.standings.items()}
         actual_pp_balls = dict(Counter(s.ppballs))
         assert actual_pp_balls == expected_pp_balls
 
@@ -36,8 +37,8 @@ class TestClass(object):
         s.calculate_probabilistic_odds()
         six_trues = [True] * 6
         ordered = []
-        for ordered_cum_probs in s.cumulative_probabilistic_odds.values():
-            if list(ordered_cum_probs.values()) == sorted(ordered_cum_probs.values()):
+        for ordered_cum_probabilities in s.cumulative_probabilistic_odds.values():
+            if list(ordered_cum_probabilities.values()) == sorted(ordered_cum_probabilities.values()):
                 ordered.append(True)
             else:
                 ordered.append(False)
