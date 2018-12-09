@@ -179,7 +179,7 @@ class Simulator:
         for place in sorted(self.standings.keys()):
             team = self.standings[place]
             statement = (
-                "---{}--- ({}th place) has these probabilities:".format(team, place)
+                "--- {} --- ({}th place) has these probabilities:".format(team, place)
             )
             print(statement)
             print("Pick\tThis pick\tThis pick or better")
