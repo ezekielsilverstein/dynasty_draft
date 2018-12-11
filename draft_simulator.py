@@ -188,7 +188,6 @@ class Simulator:
                     "{}:\t{}\t\t{}".format(pick,
                                            self.probabilistic_odds[team][pick],
                                            self.cumulative_probabilistic_odds[team][pick]))
-                print("")
         return None
 
 
@@ -261,5 +260,3 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     s = main(args.filename, args.nofile, args.action)
-
-
